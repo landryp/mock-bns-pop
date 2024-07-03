@@ -45,6 +45,7 @@ MMAX = float(configParser['population-model']['MMAX'])
 MPARAMS = str(configParser['population-model']['MPARAMS']).split(',')
 EOS = str(configParser['eos']['EOS'])
 EOS_PATH = str(configParser['eos']['EOS_PATH'])
+NPOP = str(configParser['observing-scenario']['NPOP'])
 TIME = float(configParser['observing-scenario']['TIME'])
 ZMIN = float(configParser['observing-scenario']['ZMIN'])
 ZMAX = float(configParser['observing-scenario']['ZMAX'])
@@ -94,8 +95,11 @@ Lambda_of_M = interp1d(Ms,Lambdas,kind='linear',bounds_error=True) # interpolate
 np.random.seed(SEED)
 
 # calculate size of simulated population
-vt = 1e-9*cosmo.comoving_volume(ZMAX).value*TIME # sensitive volume-time product in Gpc^3*yr
-npop = math.ceil(RATE*vt)
+if NPOP == 'False':
+    vt = 1e-9*cosmo.comoving_volume(ZMAX).value*TIME # sensitive volume-time product in Gpc^3*yr
+    npop = math.ceil(RATE*vt)
+else:
+    npop = int(NPOP)
 
 # sample from mass model
 m_grid = np.arange(max(MMIN,min(Ms)),min(MMAX,max(Ms)),0.01) # regular grid in NS masses
