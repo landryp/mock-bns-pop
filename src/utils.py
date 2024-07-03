@@ -7,8 +7,6 @@ import astropy.units as u
 from astropy.coordinates import Distance
 from astropy.cosmology import Planck15 as cosmo
 
-import sys
-sys.path.insert(0,'/home/philippe.landry/gwbench')
 from gwbench import network
 
 # define constants
